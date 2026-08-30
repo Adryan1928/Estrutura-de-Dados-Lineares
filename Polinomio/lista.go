@@ -40,7 +40,7 @@ type ListaOrdenada interface {
 	Somar(outra *Lista) *Lista
 	Subtrair(outra *Lista) *Lista
 	Multiplicar(outra *Lista) *Lista
-	LerPolinomio(linha string) (*Lista, error)
+	LerPolinomio(linha string) error
 }
 
 type Lista struct {
@@ -315,15 +315,20 @@ func (l *Lista) LerPolinomio(linha string) error {
 
 	polinomio := NovaLista()
 	for indice := 0; indice < len(campos); indice += 2 {
-		coeficiente, erro := strconv.Atoi(campos[indice])
+		coeficiente, erro := strconv.ParseFloat(campos[indice], 64)
 		if erro != nil {
 			return fmt.Errorf("coeficiente inválido %q: %w", campos[indice], erro)
 		}
+
+		fmt.Println(coeficiente)
 		expoente, erro := strconv.Atoi(campos[indice+1])
-		if erro != nil || expoente < 0 {
+		if erro != nil {
 			return fmt.Errorf("expoente inválido %q", campos[indice+1])
 		}
+		fmt.Println(expoente)
 		polinomio.Inserir(coeficiente, expoente)
 	}
+
+	fmt.Println("Polinomio: ", polinomio.Exibir())
 	return nil
 }

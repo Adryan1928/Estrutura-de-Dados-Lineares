@@ -47,7 +47,7 @@ func questao1() {
 	noTres := polinomio.Buscar(3)
 	fmt.Println("Busca pelo expoente 3 encontrou um nó?", noTres != nil)
 
-	polinomio.AlterarNo(noUm, 4, -2)
+	polinomio.AlterarNo(noUm, -2, 4)
 	fmt.Println("Após alterar -2x para -2x⁴:", polinomio.MostrarALL())
 
 	fmt.Println("Grau do polinômio:", polinomio.Grau())
@@ -58,8 +58,8 @@ func questao1() {
 	fmt.Println("Polinômio formatado:", polinomio.Exibir())
 
 	outra := NovaLista()
-	outra.Inserir(3, 2) // 3x²
-	outra.Inserir(5, 1) // 5x
+	outra.Inserir(3, 4) // 3x²
+	outra.Inserir(5, 0) // 5x
 
 	soma := polinomio.Somar(outra)
 	fmt.Println("Soma dos polinômios:", soma.Exibir())
@@ -136,66 +136,67 @@ func processarLinhas(linhas []string) ([]string, error) {
 		indice++
 
 		switch operacao {
-		case "+", "-", "*":
-			primeiro, erro := proximoPolinomio(linhas, &indice)
-			if erro != nil {
-				return nil, erro
-			}
-			segundo, erro := proximoPolinomio(linhas, &indice)
-			if erro != nil {
-				return nil, erro
-			}
+			case "+", "-", "*":
+				primeiro, erro := proximoPolinomio(linhas, &indice)
+				fmt.Println("Primeiro polinômio:", primeiro)
+				if erro != nil {
+					return nil, erro
+				}
+				segundo, erro := proximoPolinomio(linhas, &indice)
+				if erro != nil {
+					return nil, erro
+				}
 
-			var resultado *Lista
-			switch operacao {
-			case "+":
-				resultado = primeiro.Adicionar(segundo)
-			case "-":
-				resultado = primeiro.Subtrair(segundo)
-			case "*":
-				resultado = primeiro.Multiplicar(segundo)
-			}
-			resultados = append(resultados, fmt.Sprintf("(%s) %s (%s) = %s", primeiro.Exibir(), operacao, segundo.Exibir(), resultado.Exibir()))
+				var resultado *Lista
+				switch operacao {
+					case "+":
+						resultado = primeiro.Somar(segundo)
+					case "-":
+						resultado = primeiro.Subtrair(segundo)
+					case "*":
+						resultado = primeiro.Multiplicar(segundo)
+				}
+				resultados = append(resultados, fmt.Sprintf("(%s) %s (%s) = %s", primeiro.Exibir(), operacao, segundo.Exibir(), resultado.Exibir()))
 
-		case "g":
-			polinomio, erro := proximoPolinomio(linhas, &indice)
-			if erro != nil {
-				return nil, erro
-			}
-			resultados = append(resultados, fmt.Sprintf("Grau de %s: %d", polinomio.Exibir(), polinomio.Grau()))
+			case "g":
+				polinomio, erro := proximoPolinomio(linhas, &indice)
+				if erro != nil {
+					return nil, erro
+				}
+				resultados = append(resultados, fmt.Sprintf("Grau de %s: %d", polinomio.Exibir(), polinomio.Grau()))
 
-		case "t":
-			polinomio, erro := proximoPolinomio(linhas, &indice)
-			if erro != nil {
-				return nil, erro
-			}
-			resultados = append(resultados, fmt.Sprintf("Quantidade de termos de %s: %d", polinomio.Exibir(), polinomio.Tamanho()))
+			case "t":
+				polinomio, erro := proximoPolinomio(linhas, &indice)
+				if erro != nil {
+					return nil, erro
+				}
+				resultados = append(resultados, fmt.Sprintf("Quantidade de termos de %s: %d", polinomio.Exibir(), polinomio.Tamanho()))
 
-		case "p":
-			polinomio, erro := proximoPolinomio(linhas, &indice)
-			if erro != nil {
-				return nil, erro
-			}
-			resultados = append(resultados, fmt.Sprintf("Polinômio: %s", polinomio.Exibir()))
+			case "p":
+				polinomio, erro := proximoPolinomio(linhas, &indice)
+				if erro != nil {
+					return nil, erro
+				}
+				resultados = append(resultados, fmt.Sprintf("Polinômio: %s", polinomio.Exibir()))
 
-		case "a":
-			valorTexto, erro := proximaLinha(linhas, &indice, "o valor de avaliação")
-			if erro != nil {
-				return nil, erro
-			}
-			valor, erro := strconv.ParseFloat(valorTexto, 64)
-			if erro != nil {
-				return nil, fmt.Errorf("valor de avaliação inválido %q", valorTexto)
-			}
-			polinomio, erro := proximoPolinomio(linhas, &indice)
-			if erro != nil {
-				return nil, erro
-			}
-			resultados = append(resultados, fmt.Sprintf("p(x) = %s; p(%.2f) = %.2f", polinomio.Exibir(), valor, polinomio.Avaliar(valor)))
+			case "a":
+				valorTexto, erro := proximaLinha(linhas, &indice, "o valor de avaliação")
+				if erro != nil {
+					return nil, erro
+				}
+				valor, erro := strconv.ParseFloat(valorTexto, 64)
+				if erro != nil {
+					return nil, fmt.Errorf("valor de avaliação inválido %q", valorTexto)
+				}
+				polinomio, erro := proximoPolinomio(linhas, &indice)
+				if erro != nil {
+					return nil, erro
+				}
+				resultados = append(resultados, fmt.Sprintf("p(x) = %s; p(%.2f) = %.2f", polinomio.Exibir(), valor, polinomio.Avaliar(valor)))
 
-		default:
-			return nil, fmt.Errorf("operação desconhecida %q", operacao)
-		}
+			default:
+				return nil, fmt.Errorf("operação desconhecida %q", operacao)
+			}
 	}
 
 	return resultados, nil
