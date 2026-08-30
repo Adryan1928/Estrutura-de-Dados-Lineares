@@ -36,12 +36,12 @@ func questao1() {
 	fmt.Println("O nó de expoente 1 existe?", polinomio.Existe(noUm))
 
 	if coeficiente, expoente, ok := polinomio.ObterValor(noUm); ok {
-		fmt.Printf("Valores do nó: coeficiente=%d, expoente=%d\n", coeficiente, expoente)
+		fmt.Printf("Valores do nó: coeficiente=%f, expoente=%d\n", coeficiente, expoente)
 	}
 
 	if proximo := polinomio.ObterProximo(noUm); proximo != nil {
 		coeficiente, expoente, _ := polinomio.ObterValor(proximo)
-		fmt.Printf("Próximo de x¹: coeficiente=%d, expoente=%d\n", coeficiente, expoente)
+		fmt.Printf("Próximo de x¹: coeficiente=%f, expoente=%d\n", coeficiente, expoente)
 	}
 
 	noTres := polinomio.Buscar(3)
@@ -138,7 +138,6 @@ func processarLinhas(linhas []string) ([]string, error) {
 		switch operacao {
 			case "+", "-", "*":
 				primeiro, erro := proximoPolinomio(linhas, &indice)
-				fmt.Println("Primeiro polinômio:", primeiro)
 				if erro != nil {
 					return nil, erro
 				}

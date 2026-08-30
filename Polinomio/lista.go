@@ -313,22 +313,17 @@ func (l *Lista) LerPolinomio(linha string) error {
 		return fmt.Errorf("o polinômio deve ter pares de coeficiente e expoente: %q", linha)
 	}
 
-	polinomio := NovaLista()
 	for indice := 0; indice < len(campos); indice += 2 {
 		coeficiente, erro := strconv.ParseFloat(campos[indice], 64)
 		if erro != nil {
 			return fmt.Errorf("coeficiente inválido %q: %w", campos[indice], erro)
 		}
-
-		fmt.Println(coeficiente)
 		expoente, erro := strconv.Atoi(campos[indice+1])
 		if erro != nil {
 			return fmt.Errorf("expoente inválido %q", campos[indice+1])
 		}
-		fmt.Println(expoente)
-		polinomio.Inserir(coeficiente, expoente)
+		l.Inserir(coeficiente, expoente)
 	}
 
-	fmt.Println("Polinomio: ", polinomio.Exibir())
 	return nil
 }
