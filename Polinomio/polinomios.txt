@@ -1,0 +1,28 @@
+# Cada polinômio é informado como pares: coeficiente expoente.
+# Operações disponíveis: +, -, *, g (grau), t (quantidade de termos),
+# p (exibição) e a (avaliação; a próxima linha é o valor de x).
+
++
+3 5 6 3 -7 1 8 0
+6 4 8 1 -2 0
+
+-
+5 2 2 1 1 0
+3 2 2 1 4 0
+
+*
+1 1 1 0
+1 1 -1 0
+
+g
+4 6 3 9
+
+t
+8 0 2 5 4 6 -1 1
+
+p
+8 0 2 5 4 6 -1 1
+
+a
+3
+-2 2 4 1
