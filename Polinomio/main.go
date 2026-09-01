@@ -97,7 +97,7 @@ func questao2() {
 }
 
 func localizarArquivoDeOperacoes() (string, error) {
-	for _, caminho := range []string{"Polinomio/polinomios.txt", "polinomios.txt"} {
+	for _, caminho := range []string{"Polinomio/polinomios.txt", "entrada4.txt"} {
 		if _, erro := os.Stat(caminho); erro == nil {
 			return caminho, nil
 		}

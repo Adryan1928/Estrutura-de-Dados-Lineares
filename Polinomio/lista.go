@@ -325,5 +325,7 @@ func (l *Lista) LerPolinomio(linha string) error {
 		l.Inserir(coeficiente, expoente)
 	}
 
+	l.Simplificar()
+
 	return nil
 }
