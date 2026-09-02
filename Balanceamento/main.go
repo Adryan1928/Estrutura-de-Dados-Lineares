@@ -113,11 +113,11 @@ func estaBalanceada(expressao string) (bool, map[rune]rune) {
 func main() {
 	fmt.Println("Digite a expressão matemática: ")
 	var expressao string
-	// ((a + b] * [c - d])
-	// a + (b, {[a * b], (a + b)}, a + {b - [c * d}
 	fmt.Scanln(&expressao)
 
 	if len(expressao) == 0 {
+		// ((a + b] * [c - d])
+		// a + (b, {[a * b], (a + b)}, a + {b - [c * d}
 		expressao = "a + (b, {[a * b], (a + b)}, a + {b - [c * d}"
 		fmt.Println("Expressão padrão utilizada: ", expressao)
 	}
